@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/model/post.model';
@@ -15,18 +16,24 @@ import { MessagedialogComponent } from '../messagedialog/messagedialog.component
   styleUrls: ['./message.component.css'],
 })
 export class MessageComponent {
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(
     public dialog: MatDialog,
     public userService: UserService,
     private store: Store<PostState>
   ) {}
-  displayedColumns: string[] = ['ID', 'name', 'message'];
+  displayedColumns: string[] = ['ID', 'name', 'message', 'date'];
   dataSource!: Observable<Post[]>;
 
   ngOnInit(): void {
     this.dataSource = this.store.select(getPosts);
     this.store.dispatch(loadPost());
   }
+
+  // ngAfterViewInit(): void {
+  //   this.dataSource.sort = this.sort;    
+  // }
 
   openDialog() {
     const dialogRef = this.dialog.open(MessagedialogComponent, {});

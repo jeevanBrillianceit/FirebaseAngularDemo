@@ -19,6 +19,7 @@ import { setloadingSpinner } from 'src/app/store/shared/shared.action';
 })
 export class MessagedialogComponent {
   form!: FormGroup;
+  date = new Date();
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -30,7 +31,7 @@ export class MessagedialogComponent {
   ngOnInit(): void {
     this.form = this.fb.group({
       name: [null, Validators.required],
-      message: [null, Validators.required],
+      message: [null, [Validators.required, Validators.maxLength(100)]],
     });
   }
 
@@ -38,6 +39,7 @@ export class MessagedialogComponent {
     const post: Post = {
       name: this.form.value.name,
       message: this.form.value.message,
+      date : this.date
     };
     this.store.dispatch(setloadingSpinner({ status: true }));
     this.store.dispatch(addNewPost({ post }));

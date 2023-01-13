@@ -12,6 +12,7 @@ import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import {
     MatTableModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSortModule
   ],
   exports: [
     MatToolbarModule,
@@ -37,6 +39,7 @@ import {
     MatTableModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSortModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
