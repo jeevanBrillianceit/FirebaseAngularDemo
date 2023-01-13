@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Post } from 'src/app/model/post.model';
 import { UserService } from 'src/app/services/user.service';
 import { loadPost } from 'src/app/store/post.action';
 import { getPosts } from 'src/app/store/post.selector';
 import { PostState } from 'src/app/store/post.state';
 import { MessagedialogComponent } from '../messagedialog/messagedialog.component';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-message',
@@ -16,27 +16,34 @@ import { MessagedialogComponent } from '../messagedialog/messagedialog.component
   styleUrls: ['./message.component.css'],
 })
 export class MessageComponent {
-  @ViewChild(MatSort) sort: MatSort;
-
+  @ViewChild(MatSort) sort!: MatSort;
   constructor(
     public dialog: MatDialog,
     public userService: UserService,
-    private store: Store<PostState>
+    private store: Store<PostState>,
+    private _liveAnnouncer: LiveAnnouncer
   ) {}
   displayedColumns: string[] = ['ID', 'name', 'message', 'date'];
-  dataSource!: Observable<Post[]>;
+  dataSource: any = new MatTableDataSource([]);
 
   ngOnInit(): void {
-    this.dataSource = this.store.select(getPosts);
+    this.store.select(getPosts).subscribe((data) => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
+    });
     this.store.dispatch(loadPost());
   }
-
-  // ngAfterViewInit(): void {
-  //   this.dataSource.sort = this.sort;    
-  // }
 
   openDialog() {
     const dialogRef = this.dialog.open(MessagedialogComponent, {});
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 }

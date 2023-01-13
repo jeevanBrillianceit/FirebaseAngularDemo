@@ -4,27 +4,24 @@
 </div>
 
 <div class="table-area">
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-    <!-- ID Column -->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8"  matSort (matSortChange)="announceSortChange($event)">
     <ng-container matColumnDef="ID">
       <th mat-header-cell *matHeaderCellDef> ID </th>
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
   
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
   
-    <!-- Message Column -->
     <ng-container matColumnDef="message">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Message </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Message"> Message </th>
       <td mat-cell *matCellDef="let element"> {{element.message}} </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date"> Date </th>
       <td mat-cell *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy'}} </td>
     </ng-container>
    
