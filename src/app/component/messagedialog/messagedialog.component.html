@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="closeIcon">
+    <mat-icon (click)="close()">close</mat-icon>
+  </div>
+  <div class="Form-area">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="name" formControlName="name" required />
+          <mat-error
+            *ngIf="(formdata['name'].touched) && formdata['name'].errors?.['required']"
+            >Name is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Message</mat-label>
+          <textarea matInput formControlName="message" required></textarea>
+          <mat-error
+            *ngIf="(formdata['message'].touched) && formdata['message'].errors?.['required']"
+            >message is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="accent" [disabled]="!form.valid">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

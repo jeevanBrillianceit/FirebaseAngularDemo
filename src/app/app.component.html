@@ -1,0 +1,6 @@
+<mat-toolbar color="accent">
+  <span class="home" [routerLink]="['/home']" routerLinkActive="router-link-active" ><mat-icon class="homeicon">home</mat-icon>HOME</span>
+  <span class="message" [routerLink]="['/message']"><mat-icon class="messageicon">message</mat-icon>MESSAGE</span>
+</mat-toolbar>
+<router-outlet></router-outlet>
+<mat-spinner *ngIf="showloading | async" color="accent"></mat-spinner>
